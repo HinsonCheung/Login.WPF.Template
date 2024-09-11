@@ -17,9 +17,9 @@
 
 ## 窗体截图
 
-![Login Window Screenshot](path/to/your/screenshot1.png)
+![Login Window Screenshot](images/loginWindow.png)
 
-![Another Screenshot](path/to/your/screenshot2.png)
+![Login Failed Screenshot](images/loginFailed.png)
 
 ## 使用说明
 
