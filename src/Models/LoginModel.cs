@@ -8,7 +8,7 @@ namespace Login.WPF.Template.Models
 {
     public interface ILoginService
     {
-        Task<bool> LoginAsync(string username, string password);
+        Task<(ResponseType ResponseType, string Message)> LoginAsync(string username, string password);
         void SaveCredentials(string username, string password, bool rememberMe);
         (string Username, string Password, bool RememberMe) LoadCredentials();
     }
@@ -23,7 +23,7 @@ namespace Login.WPF.Template.Models
             _httpClient = new HttpClient();
         }
 
-        public async Task<bool> LoginAsync(string username, string password)
+        public async Task<(ResponseType, string)> LoginAsync(string username, string password)
         {
             var loginUrl = "http://127.0.0.1:8000/login/"; // 替换为后端实际URL
             var loginData = new
@@ -51,19 +51,19 @@ namespace Login.WPF.Template.Models
                     var accessToken = responseData?.AccessToken;
                     // TODO: 将 access_token 存储或进一步处理
 
-                    return true; // 登录成功
+                    return (ResponseType.Successed, ""); // 登录成功
                 }
                 else
                 {
                     // 登录失败，可能的原因是用户名或密码不正确
-                    return false;
+                    return (ResponseType.Failed, "");
                 }
             }
             catch (Exception ex)
             {
                 // 处理网络请求的异常，例如连接失败等
                 Console.WriteLine($"登录请求失败: {ex.Message}");
-                return false;
+                return (ResponseType.Error, ex.Message);
             }
         }
 
@@ -88,7 +88,7 @@ namespace Login.WPF.Template.Models
         }
 
         // 加载保存的账号和密码，并返回记住我状态
-        public (string Username, string Password, bool RememberMe) LoadCredentials()
+        public (string, string, bool) LoadCredentials()
         {
             if (File.Exists(FilePath))
             {
@@ -110,5 +110,12 @@ namespace Login.WPF.Template.Models
 
         [JsonProperty("token_type")]
         public string TokenType { get; set; }
+    }
+
+    public enum ResponseType
+    {
+        Successed,
+        Failed,
+        Error
     }
 }

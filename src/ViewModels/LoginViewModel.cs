@@ -27,20 +27,24 @@ namespace Login.WPF.Template.ViewModels
         [RelayCommand]
         async Task LoginClick()
         {
-            var success = await _loginService.LoginAsync(Username, Password);
-            if (success)
+            var responseType = await _loginService.LoginAsync(Username, Password);
+            if (responseType.ResponseType == ResponseType.Successed)
             {
-                _loginService.SaveCredentials(Username, Password, RememberMe);
                 ShowCustomMessageBox("Login Successful!", "You have successfully logged in.");
+                _loginService.SaveCredentials(Username, Password, RememberMe);
 
                 // Navigate to the main application window
                 var mainWindow = new MainWindow();
                 mainWindow.Show();
                 Application.Current.MainWindow.Close();
             }
-            else
+            else if(responseType.ResponseType == ResponseType.Failed)
             {
                 ShowCustomMessageBox("Login Failed", "Login failed, please check whether the user name and password are incorrect.");
+            }
+            else if (responseType.ResponseType == ResponseType.Error)
+            {
+                ShowCustomMessageBox("登录请求失败", responseType.Message);
             }
 
             await Task.CompletedTask;
