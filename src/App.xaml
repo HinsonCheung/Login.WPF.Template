@@ -1,0 +1,43 @@
+﻿<Application x:Class="Login.WPF.Template.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Login.WPF.Template"
+             xmlns:local1="clr-namespace:Login.WPF.Template.Converter">
+    <Application.Resources>
+        <!-- Button Style -->
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                            CornerRadius="5"
+                            Padding="{TemplateBinding Padding}"
+                            BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- TextBox Style -->
+        <Style x:Key="TextBoxStyle" TargetType="TextBox">
+            <Setter Property="BorderBrush" Value="#D1D5DB" />
+            <Setter Property="Background" Value="#E5E7EB" />
+            <Setter Property="Padding" Value="10" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+        <!-- PasswordBox Style -->
+        <Style x:Key="PasswordBoxStyle" TargetType="PasswordBox">
+            <Setter Property="BorderBrush" Value="#D1D5DB" />
+            <Setter Property="Background" Value="#E5E7EB" />
+            <Setter Property="Padding" Value="10" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+        <local1:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
+        <local1:PasswordToVisibilityConverter x:Key="PasswordToVisibilityConverter"/>
+    </Application.Resources>
+
+</Application>
